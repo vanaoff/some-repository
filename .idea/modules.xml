@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/sgd/sgd.iml" filepath="$PROJECT_DIR$/sgd/sgd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/some-repository.iml" filepath="$PROJECT_DIR$/some-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wordladder/wordladder.iml" filepath="$PROJECT_DIR$/wordladder/wordladder.iml" />
+    </modules>
+  </component>
+</project>
