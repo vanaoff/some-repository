@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     def increase(indexes, val):
         for i in indexes:
-            if raw[i] != 0:
+            if raw[i][2] == 0 or val < raw[i][2]:
                 raw[i][2] = val
                 increase(indexes_minimal(matrix[i]), val + 1)
 
