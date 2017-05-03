@@ -10,7 +10,7 @@ def is_edge(one, another):
     count = 0
     for i, char in enumerate(one):
         count += 1 if char != another[i] else 0
-    return count == 1
+    return count <= 1
 
 
 def find_edges(word, words):
@@ -27,16 +27,14 @@ def append(queue, evaluated):
 
 
 def compute_distances(word_, word_list_):
-    assert word_ not in word_list_
-    full_list = [word_] + word_list_
     result = {}
-    queue = deque(evaluate_edges(find_edges(word_, full_list), 1))
+    queue = deque(evaluate_edges(find_edges(word_, word_list_), 1))
     while len(queue) > 0:
         t = queue.popleft()
         word_ = t[0]
         dist = t[1]
         if word_ not in result.keys():
-            append(queue, evaluate_edges(find_edges(word_, full_list), dist + 1))
+            append(queue, evaluate_edges(find_edges(word_, word_list_), dist + 1))
             result[word_] = dist
     return result
 
