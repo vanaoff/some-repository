@@ -16,7 +16,7 @@ def distance(one, another):
 def distance_matrix(words):
     matrix = []
     for i, word in enumerate(words):
-        matrix += [[0] * i + [distance(word, x) for x in complete_list[i:]]]
+        matrix += [[distance(word, x) for x in complete_list]]
     return matrix
 
 
