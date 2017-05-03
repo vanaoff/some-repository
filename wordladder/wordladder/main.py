@@ -1,3 +1,5 @@
+from collections import deque
+
 begin_word = "hit"
 end_word = "cog"
 word_list = ["hot", "dot", "dog", "lot", "log", "cog"]
@@ -5,39 +7,38 @@ word_list = ["hot", "dot", "dog", "lot", "log", "cog"]
 complete_list = [begin_word] + word_list
 
 
-def distance(one, another):
+def is_edge(one, another):
     assert len(one) == len(another)
     count = 0
     for i, char in enumerate(one):
         count += 1 if char != another[i] else 0
-    return count if count <= 1 else 0
+    return count == 1
 
 
-def distance_matrix(words):
-    matrix = []
-    for i, word in enumerate(words):
-        matrix += [[0] * i + [distance(word, x) for x in complete_list[i:]]]
-    return matrix
+def find_edges(word, words):
+    i = words.index(word)
+    return [x[1] for x in filter(lambda x: is_edge(x[1], word) and x[0] > i, enumerate(words))]
 
 
-def indexes_minimal(lst):
-    return [i[0] for i in list(filter(lambda x: x[1] == 1, enumerate(lst)))]
+def evaluate_edges(edges, value):
+    return [[e, value] for e in edges]
+
+
+def append(queue, list_):
+    for i in list_:
+        queue.append(i)
 
 
 if __name__ == '__main__':
-    matrix = distance_matrix(complete_list)
-    raw = [[i, word, 0] for i, word in enumerate(complete_list)]
+    result = {}
 
+    queue = deque(evaluate_edges(find_edges(begin_word, complete_list), 1))
+    while len(queue) > 0:
+        t = queue.popleft()
+        word = t[0]
+        dist = t[1]
+        if word not in result.keys():
+            append(queue, evaluate_edges(find_edges(word, complete_list), dist + 1))
+            result[word] = dist
 
-    def increase(indexes, val):
-        for i in indexes:
-            if raw[i] != 0:
-                raw[i][2] = val
-                increase(indexes_minimal(matrix[i]), val + 1)
-
-
-    increase(indexes_minimal(matrix[0]), 2)
-
-    final = list(filter(lambda x: x[1] == end_word, raw))[0]
-
-    print(final[2])
+    print(result.get(end_word, -1) + 1)
